@@ -8,13 +8,14 @@ CREATE TABLE User(
     Lastname varchar(50),
     Username varchar(50),
     Email varchar(50),
+    Salt varchar(50),
     Password varchar(255),
     UserImg varchar(255),
 
     PRIMARY KEY(ID)
 );
 
-INSERT INTO `User` (`Firstname`, `Lastname`, `Email`, `Username`, `Password`, `UserImg`) VALUES ("Admin", "Admin", "Admin", "Admin", "Password1", "1");
+INSERT INTO `User` (`Firstname`, `Lastname`, `Email`, `Username`, `Salt`, `Password`, `UserImg`) VALUES ("Admin", "Admin", "Admin", "Admin", "1e26e2f251f1d21b2cfe55077a49f8c6","6197ff47a990499c0f910e3d29b7ea50e9c44661dc0f6526e428eae93b9f6fe0", "1");
 
 CREATE TABLE Recipe(
     ID int NOT NULL AUTO_INCREMENT,
