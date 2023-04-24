@@ -9,7 +9,7 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular a
 
   // Generieren eines zufälligen Salts
   $salt = bin2hex(random_bytes(16));
-  //$salt = "1e26e2f251f1d21b2cfe55077a49f8c6"; salt vom admin
+
 
   // Erzeugen des Hashes aus dem Passwort und dem Salt
   $password = hash('sha256', $password . $salt);

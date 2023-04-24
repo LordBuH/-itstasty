@@ -21,8 +21,10 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Login-Formular abgeschick
 
   if ($user) { // Wenn der Benutzer gefunden wurde
     // Generieren des Hashes aus dem vom Benutzer eingegebenen Passwort und dem Salt aus der Datenbank
-    $password = hash('sha256', $password . $user['salt']);
-
+    $password = hash('sha256', $password . $user['Salt']);
+echo $user['Salt'];
+echo'<br>';
+echo $password;
     // Überprüfen, ob der Hash des eingegebenen Passworts mit dem in der Datenbank gespeicherten Hash übereinstimmt
     if ($password === $user['Password']) {
       session_start();
