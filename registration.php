@@ -1,4 +1,7 @@
 <?php
+// Einbindung der Datenbankverbindung
+include 'db_conn.php';
+
 if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular abgeschickt wurde
   $firstname = $_POST['firstname'];
   $lastname = $_POST['lastname'];
@@ -14,31 +17,26 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular a
   // Erzeugen des Hashes aus dem Passwort und dem Salt
   $password = hash('sha256', $password . $salt);
 
-  // Speichern der Benutzerdaten (hier nur ein Beispiel, Sie müssen Ihre eigene Datenbankverbindung verwenden)
-  // Erstellen einer Datenbankverbindung
-  $host = 'localhost';
-  $db = 'itstasty';
-  $user = 'root';
-  $pass = '';
-  $charset = 'utf8mb4';
-
-  $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-  $pdo = new PDO($dsn, $user, $pass);
-
   // Überprüfen, ob der Benutzername bereits existiert
-  $stmt = $pdo->prepare('SELECT COUNT(*) FROM user WHERE username = ?');
-  $stmt->execute([$username]);
-  $result = $stmt->fetchColumn();
+  $stmt = $conn->prepare('SELECT COUNT(*) FROM user WHERE username = ?');
+  $stmt->bind_param('s', $username);
+  $stmt->execute();
+  $result = $stmt->get_result()->fetch_assoc()['COUNT(*)'];
 
   if ($result) {
     $error = 'Benutzername bereits vergeben';
   } else {
+
     // Speichern der Benutzerdaten in der Datenbank
-    $stmt = $pdo->prepare('INSERT INTO user (Firstname, Lastname, Username, Email, Salt, Password, UserImg) VALUES (?, ?, ?, ?, ?, ?, ?)');
-    $stmt->execute([$firstname, $lastname, $username, $email, $salt, $password, $userImg]);
+    $stmt = $conn->prepare('INSERT INTO user (Firstname, Lastname, Username, Email, Salt, Password, UserImg) VALUES (?, ?, ?, ?, ?, ?, ?)');
+    $stmt->bind_param('sssssss', $firstname, $lastname, $username, $email, $salt, $password, $userImg);
+    $stmt->execute();
     header('Location: login.php'); // Weiterleitung zur Login-Seite
     exit;
   }
+
+  // Verbindung schließen
+  $conn->close();
 }
 ?>
 

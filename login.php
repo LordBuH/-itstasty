@@ -1,35 +1,32 @@
 <?php
-if (isset($_POST['submit'])) { // Überprüfen, ob das Login-Formular abgeschickt wurde
+ // Einbindung der Datenbankverbindung
+include 'db_conn.php';
+
+if (isset($_POST['submit'])) {
   $username = $_POST['username'];
   $password = $_POST['password'];
 
-  // Abrufen des Benutzers aus der Datenbank
-  // Erstellen einer Datenbankverbindung
-  $host = 'localhost';
-  $db = 'itstasty';
-  $user = 'root';
-  $pass = '';
-  $charset = 'utf8mb4';
+  // Überprüfen, ob die Verbindung fehlerfrei hergestellt wurde
+  if ($conn->connect_error) {
+    die("Verbindung fehlgeschlagen: " . $conn->connect_error);
+  }
 
-  $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-  $pdo = new PDO($dsn, $user, $pass);
+  // Benutzer aus der Datenbank abrufen
+  $stmt = $conn->prepare('SELECT * FROM user WHERE username = ?');
+  $stmt->bind_param('s', $username);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $user = $result->fetch_assoc();
 
-  $stmt = $pdo->prepare('SELECT * FROM user WHERE username = ?');
-  $stmt->execute([$username]);
-  $user = $stmt->fetch();
-  $salt = "1e26e2f251f1d21b2cfe55077a49f8c6";
-
-  if ($user) { // Wenn der Benutzer gefunden wurde
+  if ($user) {
     // Generieren des Hashes aus dem vom Benutzer eingegebenen Passwort und dem Salt aus der Datenbank
     $password = hash('sha256', $password . $user['Salt']);
-echo $user['Salt'];
-echo'<br>';
-echo $password;
+
     // Überprüfen, ob der Hash des eingegebenen Passworts mit dem in der Datenbank gespeicherten Hash übereinstimmt
     if ($password === $user['Password']) {
       session_start();
       $_SESSION['username'] = $username;
-      header('Location: index.php'); // Weiterleitung zur Startseite
+      header('Location: index.php');
       exit;
     } else {
       $error = 'Falsches Passwort';
@@ -37,6 +34,10 @@ echo $password;
   } else {
     $error = 'Benutzername nicht gefunden';
   }
+
+  // Verbindung schließen
+  $stmt->close();
+  $conn->close();
 }
 ?>
 

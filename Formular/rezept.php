@@ -8,12 +8,8 @@
 </head>
 <body>
 <?php
-
-## DB Connection Data ##
-$db_server = "localhost";
-$db_user = "root";
-$db_user_passwort = "";
-$db_name = "itstasty";
+// Einbindung der Datenbankverbindung
+include 'db_conn.php';
 
 ## Mysql Connection ##
 $database = mysqli_connect($db_server , $db_user, $db_user_passwort, $db_name);
