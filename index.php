@@ -14,12 +14,18 @@ include 'nav.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
+        <style>
+          .main{
+            padding-top: 50px;
+          }
+        </style>
 </head>
 <body>
 <?php
 GetNav("");
 ?>
 <!-- Slider -->
+<div class="main">
 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -85,6 +91,7 @@ GetNav("");
     </p>
     <a class="btn btn-primary disabled placeholder col-6"></a>
   </div>
+</div>
 </div>
 </div>
 </div>

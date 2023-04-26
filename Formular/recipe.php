@@ -9,7 +9,7 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Formular abgeschickt wurd
     $RecipeImg = $_POST['RecipeImg'];
 
 ###### Rezept Insert ########
-echo $Name;
+echo 'Rezept wurde erfolgreich in die DB geladen.';
 $stmt = $conn->prepare('INSERT INTO Recipe (UserID, Name, Instruction, Time, RecipeImg) VALUES (?, ?, ?, ?, ?)');
 $stmt->bind_param('sssss', $UserID, $Name, $Instruction, $Time, $RecipeImg);
 $stmt->execute();
