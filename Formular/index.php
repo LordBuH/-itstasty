@@ -10,7 +10,7 @@
     <?php
                 $headline = "Neues Rezept anlegen";
                 echo'<h1>' . $headline . '</h1>';
-                echo"    <form action='rezept.php' method='POST'>                        
+                echo"    <form action='recipe.php' method='POST'>                        
                             <div class='inputs'>
                                 <input placeholder='Name' name='Name'>
                             </div>
@@ -35,9 +35,7 @@
                                  <input placeholder='Menge' name='QuantityValue'>
                             </div>
 
-                            <div class='inputs'>
-                                <button type='submit'>Absenden</button>
-                            </div>
+                            <input type='submit' name='submit' value='Anmelden'>
                         </form>
                     ";
     ?>
