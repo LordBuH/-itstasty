@@ -55,8 +55,10 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular a
     integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
     crossorigin="anonymous"></script>
     <style>
-          .main{
-            padding-top: 70px;
+          .container{
+            padding-top: 100px;
+            padding-right: 250px;
+            padding-left: 250px;
           }
     </style>
 </head>
@@ -67,23 +69,34 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular a
  if (isset($error)) { ?>
     <p><?php echo $error; ?></p>
   <?php } ?>
-  <div class='main'>
+  <div class='container'>
   <div class="card" aria-hidden="true"> 
-  <form method="post">
-    <label for="firstname">Vorname:</label>
-    <input type="text" name="firstname" required><br>
-    <label for="lastname">Nachname:</label>
-    <input type="text" name="lastname" required><br>
-    <label for="username">Benutzername:</label>
-    <input type="text" name="username" required><br>
-    <label for="email">E-Mail-Adresse:</label>
-    <input type="email" name="email" required><br>
-    <label for="password">Passwort:</label>
-    <input type="password" name="password" required><br>
-    <label for="img">Profilbild:</label>
-    <input type="text" name="img" required><br>
-    <input type="submit" name="submit" value="Registrieren">
-  </form>
+
+  <form class="row g-3" method="post">
+  <div class="form-floating">
+    <input type="firsname" class="form-control" id="floatingInput" name="firstname" placeholder="Vorname">
+    <label for="floatingFirstname">Vorname</label>
+  </div>
+  <div class="form-floating">
+    <input type="lastname" class="form-control" id="floatingInput" name="lastname" placeholder="Nachname">
+    <label for="floatingLastnam">Nachname</label>
+  </div>
+  <div class="form-floating">
+    <input type="username" class="form-control" id="floatingInput" name="username" placeholder="Benutzername">
+    <label for="floatingUsername">Benutzername</label>
+  </div>
+  <div class="form-floating">
+      <input type="email" class="form-control" id="floatingInput" name="email" placeholder="E-Mail">
+      <label for="floatingEmail">E-Mail</label>
+  </div>
+  <div class="form-floating">
+  <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Passwort">
+  <label for="floatingPassword">Passwort</label>
+</div>
+<div class="d-grid gap-2">
+  <button class="btn btn-primary" type="submit"  name="submit" value="Registrieren">Registrierung</button>
+</div>
+</form>
 </div>
 </div>
 </body>
