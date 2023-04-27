@@ -33,6 +33,8 @@ CREATE TABLE Comment(
     ID int NOT NULL AUTO_INCREMENT,
     UserID int NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(ID),
+    RecipeID int NOT NULL,
+    FOREIGN KEY (RecipeID) REFERENCES Recipe(ID),
     Comment varchar(255),
 
     PRIMARY KEY(ID)
