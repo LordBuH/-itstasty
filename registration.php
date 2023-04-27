@@ -1,7 +1,7 @@
 <?php
 // Einbindung der Datenbankverbindung
 include 'db_conn.php';
-include 'nav.php';
+include 'contentphp';
 
 
 if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular abgeschickt wurde

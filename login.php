@@ -1,7 +1,7 @@
 <?php
  // Einbindung der Datenbankverbindung
 include 'db_conn.php';
-include 'nav.php';
+include 'content.php';
 
 if (isset($_POST['submit'])) {
   $username = $_POST['username'];
