@@ -78,6 +78,7 @@ CREATE TABLE IngredientsRecipe(
     FOREIGN KEY (RecipeID) REFERENCES Recipe(ID),
 
     QuantityID int NOT NULL,
+    FOREIGN KEY (QuantityID) REFERENCES Quantity(ID),
     QuantityValue int NOT NULL,
 
     PRIMARY KEY(ID)
@@ -97,7 +98,7 @@ CREATE TABLE CategoriesRecipe(
 CREATE TABLE Rating(
     ID int NOT NULL AUTO_INCREMENT,
     UserID int NOT NULL,
-    FOREIGN KEY (UserID) REFERENCES Rating(ID),
+    FOREIGN KEY (UserID) REFERENCES User(ID),
 
     RecipeID int NOT NULL,
     FOREIGN KEY (RecipeID) REFERENCES Recipe(ID),
