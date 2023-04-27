@@ -1,5 +1,5 @@
 <?php
-include 'nav.php';
+include 'content.php';
 ?>
 
 <!DOCTYPE html>
@@ -15,9 +15,6 @@ include 'nav.php';
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
         <style>
-          .main{
-            padding-top: 50px;
-          }
           .container{
             padding-top: 50px;
           }
