@@ -14,10 +14,6 @@ $stmt = $conn->prepare('INSERT INTO Recipe (UserID, Name, Instruction, Time, Rec
 $stmt->bind_param('sssss', $UserID, $Name, $Instruction, $Time, $RecipeImg);
 $stmt->execute();
 
-#$sql_statment = "INSERT INTO `RezeptTB` (`UserID`, `Name`,`Instruction`, `Time`, `RecipeImg`) VALUES ('$UserID','$Name', '$Instruction', '$Time', '$RecipeImg');"
-
-### Execute Mysql Statment ###
-#$con = mysqli_query($database, $sql_statment);
 
 ###### Zutaten Rezept DB ########
 $IngredientsID = 1;
