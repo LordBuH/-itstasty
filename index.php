@@ -15,8 +15,10 @@ include 'content.php';
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
         <style>
+
           .container{
             padding-top: 50px;
+            /*background: linear-gradient(0deg, rgb(2, 81, 19), rgb(4, 216, 4));*/
           }
         </style>
 </head>

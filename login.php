@@ -54,31 +54,29 @@ if (isset($_POST['submit'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
-        <style>
-          .main{
-            padding-top: 70px;
-          }
-        </style>
+      <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
   <?php 
   GetNav("Anmeldung");
   
-  if (isset($error)) { ?>
-    <p><?php echo $error; ?></p>
-  <?php } ?>
-  <div class='main'>
-  <div class="card" aria-hidden="true"> 
-    <form method="post">
-    <label for="username">Benutzername:</label>
-    <input type="text" name="username" required><br>
-    <label for="password">Passwort:</label>
-    <input type="password" name="password" required><br>
-    <input type="submit" name="submit" value="Anmelden">
-    <button onclick="window.location.href='registration.php'">Registrieren</button>
-  </form>
-</div>
-</div>
-
+  if (isset($error)) { 
+echo"<p> $error; ?></p>";
+ }?>
+  <div class='page-content d-flex align-item-center'>
+    <div class='container d-flex justify-content-center'>
+      <div class='cul-6'>
+        <div class='auth-card'>
+          <form method="post">
+            <label for="username">Benutzername:</label>
+            <input type="text" name="username" required><br>
+            <label for="password">Passwort:</label>
+            <input type="password" name="password" required><br>
+            <input type="submit" name="submit" value="Anmelden">
+            <button onclick="window.location.href='registration.php'">Registrieren</button>
+          </form>
+        </div>
+      </div>
+    </div>
 </body>
 </html>
