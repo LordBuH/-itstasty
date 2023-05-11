@@ -59,24 +59,39 @@ if (isset($_POST['submit'])) {
 <body>
   <?php 
   GetNav("Anmeldung");
-  
-  if (isset($error)) { 
-echo"<p> $error; ?></p>";
- }?>
-  <div class='page-content d-flex align-item-center'>
-    <div class='container d-flex justify-content-center'>
-      <div class='cul-6'>
-        <div class='auth-card'>
-          <form method="post">
-            <label for="username">Benutzername:</label>
-            <input type="text" name="username" required><br>
-            <label for="password">Passwort:</label>
-            <input type="password" name="password" required><br>
-            <input type="submit" name="submit" value="Anmelden">
-            <button onclick="window.location.href='registration.php'">Registrieren</button>
-          </form>
-        </div>
-      </div>
+  ?>
+<div class="page-content d-flex align-items-center">
+  <div class="container d-flex justify-content-center">
+    <div class='col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5'>
+      <div class='auth-card'>
+        <div class='logo-area d-flex justify-content-center'>
+          <img id="header_logo" class="logo" src="img/logo.png" />
+        </div>        
+  <form class="row g-3" method="post">
+    <div class="form-floating">
+      <input type="username" class="form-control" id="floatingInput" name="username" placeholder="Benutzername">
+      <label for="floatingUsername">Benutzername</label>
     </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Passwort">
+      <label for="floatingPassword">Passwort</label>
+    </div>
+    <div class="d-grid gap-2">
+      <button class="btn btn-light btn-lg" type="submit"  name="submit" value="Anmelden">Anmelden</button>
+      <a class='btn btn-light btn-lg' href='registration.php' role='button'>Registrieren</a>
+      <?php
+        if (isset($error)) { 
+          echo"<p> $error; ?></p>";
+        }
+      ?>
+    </div>
+  </form>
+    </div>
+  </div>
+</div>
+</div>
+<?php
+GetFooter();
+?>
 </body>
 </html>

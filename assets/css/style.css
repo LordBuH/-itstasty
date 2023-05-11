@@ -1,12 +1,15 @@
 .page-content {
     width: 100%;
     min-height: 100vh;
-    background: linear-gradient(45deg, rgb(230, 230, 230), white);
+    background: linear-gradient(45deg, rgb(0, 83, 4), rgb(1, 204, 31));
 }
 
 .auth-card{
-    background-color: white;
+    background-color: #212529;
     box-shadow: 0 3xp 12xp rgb(0, 0, 0 / 0.2);
     border-radius: 20px;
-    padding: 10px 10%;
+    padding-top: 10px;
+    padding-right: 10%;
+    padding-left: 10%;
+    padding-bottom: 60px;
 }

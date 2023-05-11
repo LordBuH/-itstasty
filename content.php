@@ -3,7 +3,10 @@ function GetNav($input) {
 echo"
   <nav class='navbar navbar-dark bg-dark fixed-top'>
   <div class='container-fluid'>
-    <a class='navbar-brand' href='index.php'>ItsTastY $input</a>
+    <a class='navbar-brand fs-3 fw-bold' href='index.php'>
+      <img src='img/logo.png' alt='Logo' width='50' height='50' class='d-inline-block align-text-center'>
+      ItsTastY $input
+    </a>
     <button class='navbar-toggler' type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasDarkNavbar' aria-controls='offcanvasDarkNavbar' aria-label='Toggle navigation'>
       <span class='navbar-toggler-icon'></span>
     </button>
@@ -73,7 +76,7 @@ function GetCart() {
 
 function GetFooter() {
   echo"
-<footer class='bg-dark py-4 mt-5'>
+<footer class='bg-dark py-4 mt-4'>
   <div class='container text-light text-center'>
     <p class='display-5 mb-3'>© ItsTastY-Team.</p>
     <small class='text-white-50'>© ItsTastY-Team.</small>

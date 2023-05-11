@@ -54,50 +54,60 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular a
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
     <style>
-          .container{
-            padding-top: 100px;
-            padding-right: 250px;
-            padding-left: 250px;
-          }
+      .page-content {
+        margin-top: 60px;
+      }
     </style>
 </head>
 <body>
   <?php
   GetNav("Registrierung");
-
- if (isset($error)) { ?>
-    <p><?php echo $error; ?></p>
-  <?php } ?>
-  <div class='container'>
-  <div class="card" aria-hidden="true"> 
-
-  <form class="row g-3" method="post">
-  <div class="form-floating">
-    <input type="firsname" class="form-control" id="floatingInput" name="firstname" placeholder="Vorname">
-    <label for="floatingFirstname">Vorname</label>
+  ?>
+<div class="page-content d-flex align-items-center ">
+  <div class="container d-flex justify-content-center">
+    <div class='col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5'>
+      <div class='auth-card'>
+          <div class='logo-area d-flex justify-content-center'>
+            <img id="header_logo" class="logo" src="img/logo.png" />
+          </div>     
+        <form class="row g-3" method="post">
+          <div class="form-floating">
+            <input type="firsname" class="form-control" id="floatingInput" name="firstname" placeholder="Vorname">
+            <label for="floatingFirstname">Vorname</label>
+          </div>
+          <div class="form-floating">
+            <input type="lastname" class="form-control" id="floatingInput" name="lastname" placeholder="Nachname">
+            <label for="floatingLastnam">Nachname</label>
+          </div>
+          <div class="form-floating">
+            <input type="username" class="form-control" id="floatingInput" name="username" placeholder="Benutzername">
+            <label for="floatingUsername">Benutzername</label>
+          </div>
+          <div class="form-floating">
+            <input type="email" class="form-control" id="floatingInput" name="email" placeholder="E-Mail">
+            <label for="floatingEmail">E-Mail</label>
+          </div>
+          <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Passwort">
+            <label for="floatingPassword">Passwort</label>
+          </div>
+          <div class="d-grid gap-2">
+            <button class="btn btn-light btn-lg" type="submit"  name="submit" value="Registrieren">Registrierung</button>
+            <?php
+              if (isset($error)) { 
+                echo"<p><?php echo $error</p>";
+              } 
+            ?>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-  <div class="form-floating">
-    <input type="lastname" class="form-control" id="floatingInput" name="lastname" placeholder="Nachname">
-    <label for="floatingLastnam">Nachname</label>
-  </div>
-  <div class="form-floating">
-    <input type="username" class="form-control" id="floatingInput" name="username" placeholder="Benutzername">
-    <label for="floatingUsername">Benutzername</label>
-  </div>
-  <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" name="email" placeholder="E-Mail">
-      <label for="floatingEmail">E-Mail</label>
-  </div>
-  <div class="form-floating">
-  <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Passwort">
-  <label for="floatingPassword">Passwort</label>
 </div>
-<div class="d-grid gap-2">
-  <button class="btn btn-primary" type="submit"  name="submit" value="Registrieren">Registrierung</button>
-</div>
-</form>
-</div>
-</div>
+<?php
+    GetFooter();
+  ?>
 </body>
 </html>
