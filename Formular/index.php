@@ -39,6 +39,46 @@
                         </form>
                     ";
     ?>
+<form method="POST" action="index.php">
+  <div id="input-felder">
+    <input type="text" name="zutaten[]" placeholder="Zutat" />
+  </div>
+
+  <div id="more">+</div>
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <input type="submit" value="submit" />
+</form>
+
+<script>
+
+const button = document.getElementById("more");
+const container = document.getElementById("input-felder");
+
+button.addEventListener('click', () => {
+  const input = document.createElement('input');
+  input.setAttribute('name', 'zutaten[]');
+  input.setAttribute('type', 'text');
+  input.setAttribute('placeholder', 'Zutat');
+
+  container.append(input);
+})
+
+</script>
+
+<?php
+if(isset($_POST['zutaten'])) {
+  var_dump($_POST['zutaten']);
+
+  //foreach isset post zutaten als zutat
+  // zutat insert table zutat für das rezept
+}
+
+?>
+
 </body>
 </html>
                     
