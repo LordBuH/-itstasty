@@ -4,7 +4,7 @@ echo"
   <nav class='navbar navbar-dark bg-dark fixed-top'>
   <div class='container-fluid'>
     <a class='navbar-brand fs-3 fw-bold' href='index.php'>
-      <img src='img/logo.png' alt='Logo' width='50' height='50' class='d-inline-block align-text-center'>
+      <img src='assets/img/logo.png' alt='Logo' width='50' height='50' class='d-inline-block align-text-center'>
       ItsTastY $input
     </a>
     <button class='navbar-toggler' type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasDarkNavbar' aria-controls='offcanvasDarkNavbar' aria-label='Toggle navigation'>
@@ -55,7 +55,7 @@ function GetCart() {
     echo "
     <div class='col-12 col-md-6 col-lg-4'>
         <div class='card' aria-hidden='true'>
-          <img src='img/cover3.jpg' class='card-img-top' alt='...'>
+          <img src='assets/img/cover3.jpg' class='card-img-top' alt='...'>
             <div class='card-body'>
               <h5 class='card-title placeholder-glow'>
                 <span class='placeholder col-6'></span>
