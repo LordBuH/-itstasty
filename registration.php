@@ -93,15 +93,19 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular a
             <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Passwort">
             <label for="floatingPassword">Passwort</label>
           </div>
+          <div class="form-floating">
+            <input  type="file" id="floatingInput" name="img">
+            <label for="floatingPassword">Passwort</label>
+          </div>
           <div class="d-grid gap-2">
             <button class="btn btn-light btn-lg" type="submit"  name="submit" value="Registrieren">Registrierung</button>
-            <?php
-              if (isset($error)) { 
-                echo"<p><?php echo $error</p>";
-              } 
-            ?>
           </div>
         </form>
+        <?php
+              if (isset($error)) { 
+                echo"<p>$error</p>";
+              } 
+            ?>
       </div>
     </div>
   </div>
