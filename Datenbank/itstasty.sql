@@ -15,7 +15,7 @@ CREATE TABLE User(
     PRIMARY KEY(ID)
 );
 
-INSERT INTO `User` (`Firstname`, `Lastname`, `Email`, `Username`, `Salt`, `Password`, `UserImg`) VALUES ("Admin", "Admin", "Admin", "Admin", "1e26e2f251f1d21b2cfe55077a49f8c6","9e07b4d4bfc4cf438ad2e92fc68f7d2cb6fa0b7fb30a68a9e7d18a6c064a6a32", "1");
+INSERT INTO `User` (`Firstname`, `Lastname`, `Email`, `Username`, `Salt`, `Password`, `UserImg`) VALUES ("Admin", "Admin", "Admin", "Admin", "1cb3806aa508634ead89064afb110237", "42db05b1ecfccfff1922a0fb10c1b8c24a920cbd6ea73e75b872b315c03c6d11", "1");
 
 CREATE TABLE Recipe(
     ID int NOT NULL AUTO_INCREMENT,

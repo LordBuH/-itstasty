@@ -13,3 +13,7 @@
     padding-left: 10%;
     padding-bottom: 60px;
 }
+
+.auth-card p{
+    color: whitesmoke;
+}

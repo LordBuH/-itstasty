@@ -22,10 +22,9 @@ if (isset($_POST['submit'])) {
   if ($user) {
     // Generieren des Hashes aus dem vom Benutzer eingegebenen Passwort und dem Salt aus der Datenbank
     $password = hash('sha256', $password . $user['Salt']);
-
+          echo"$password";
     // Überprüfen, ob der Hash des eingegebenen Passworts mit dem in der Datenbank gespeicherten Hash übereinstimmt
     if ($password === $user['Password']) {
-      session_start();
       $_SESSION['username'] = $username;
       header('Location: index.php');
       exit;
@@ -58,7 +57,7 @@ if (isset($_POST['submit'])) {
 </head>
 <body>
   <?php 
-  GetNav("Anmeldung");
+    GetNav("Anmeldung")
   ?>
 <div class="page-content d-flex align-items-center mt-5">
   <div class="container d-flex justify-content-center">
@@ -79,13 +78,13 @@ if (isset($_POST['submit'])) {
     <div class="d-grid gap-2">
       <button class="btn btn-light btn-lg" type="submit"  name="submit" value="Anmelden">Anmelden</button>
       <a class='btn btn-light btn-lg' href='registration.php' role='button'>Registrieren</a>
-      <?php
-        if (isset($error)) { 
-          echo"<p> $error; ?></p>";
-        }
-      ?>
     </div>
   </form>
+  <?php
+    if (isset($error)) { 
+      echo"<p>$error</p>";
+    } 
+  ?>
     </div>
   </div>
 </div>
