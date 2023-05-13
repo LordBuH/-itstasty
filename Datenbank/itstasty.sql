@@ -10,7 +10,7 @@ CREATE TABLE User(
     Email varchar(50),
     Salt varchar(50),
     Password varchar(255),
-    UserImg blob NOT NULL,
+    UserImg MEDIUMBLOB NOT NULL,
 
     PRIMARY KEY(ID)
 );
@@ -24,7 +24,7 @@ CREATE TABLE Recipe(
     Name VARCHAR(255),
     instruction LONGTEXT,
     Time int NOT NULL,
-    RecipeImg blob NOT NULL,
+    RecipeImg MEDIUMBLOB NOT NULL,
 
     PRIMARY KEY(ID)
 );
