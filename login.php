@@ -2,6 +2,7 @@
  // Einbindung der Datenbankverbindung
 include 'db_conn.php';
 include 'content.php';
+session_start();
 
 if (isset($_POST['submit'])) {
   $username = $_POST['username'];
@@ -25,8 +26,10 @@ if (isset($_POST['submit'])) {
           echo"$password";
     // Überprüfen, ob der Hash des eingegebenen Passworts mit dem in der Datenbank gespeicherten Hash übereinstimmt
     if ($password === $user['Password']) {
+      $_SESSION['userID'] = $user['ID'];
       $_SESSION['username'] = $username;
-      header('Location: index.php');
+      $_SESSION['userImg'] = $user['UserImg'];
+      header('Location: user.php');
       exit;
     } else {
       $error = 'Falsches Passwort';

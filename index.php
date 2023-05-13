@@ -1,5 +1,6 @@
 <?php
 include 'content.php';
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +71,6 @@ GetNav("");
     ?>
   </div>
 </div>
-
 <?php
   GetFooter();
 ?>

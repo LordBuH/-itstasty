@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,13 +17,22 @@
 </head>
 <body>
 <div>
-    <div>
+<div>
     <?php
-    $headline = "Herzlich willkommen";
-    echo '<h1>' . $headline . '</h1>';
-    echo '<p>Dies ist die Startseite.</p>';    
+        if(isset($_SESSION['userID'])){
+            $userID = $_SESSION['userID'];
+            $username = $_SESSION['username'];
+            $userImg = $_SESSION['userImg'];
+            echo"
+                <div class'container mt-5'>
+                    <p>$userID</p>
+                    <p>$username</p>
+                    <img src='data:image/jpeg;base64," . base64_encode($userImg) . "'>
+                </div>
+            ";
+       }
     ?>
-    </div>
+  </div>
 </div>
     <div>
     <p>(C) ItsTastY-Team.</p>
