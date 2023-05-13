@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
   <?php 
   GetNav("Anmeldung");
   ?>
-<div class="page-content d-flex align-items-center">
+<div class="page-content d-flex align-items-center mt-5">
   <div class="container d-flex justify-content-center">
     <div class='col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5'>
       <div class='auth-card'>
