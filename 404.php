@@ -12,7 +12,7 @@
     crossorigin="anonymous"></script></head>
 </head>
 <body>
-  <h1>404 - Seite nicht gefunden</h1>
+  <h1>404 - Seite nicht gefunden!</h1>
   <p>Es tut uns leid, aber die von Ihnen angeforderte Seite konnte nicht gefunden werden.</p>
 </body>
 </html>
