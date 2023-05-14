@@ -60,14 +60,14 @@ if (isset($_POST['submit'])) {
 </head>
 <body>
   <?php 
-    GetNav("Anmeldung")
+    GetNav("Anmeldung");
   ?>
 <div class="page-content d-flex align-items-center mt-5">
   <div class="container d-flex justify-content-center">
     <div class='col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5'>
       <div class='auth-card'>
         <div class='logo-area d-flex justify-content-center'>
-          <img id="header_logo" class="logo" src="img/logo.png" />
+          <img id="header_logo" class="logo" src="assets/img/logo.png" />
         </div>        
   <form class="row g-3" method="post">
     <div class="form-floating">
