@@ -15,11 +15,6 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
-        <style>
-          .container{
-            padding-top: 50px;
-          }
-        </style>
 </head>
 <body>
 <?php
@@ -34,21 +29,21 @@ GetNav("");
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="img/cover1.jpg" class="d-block w-100" alt="...">
+      <img src="assets/img/cover1.jpg" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
         <h5>Frühstücks Ideen</h5>
         <p>Für den perfektenstart in den Tag.</p>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="img/cover2.jpg" class="d-block w-100" alt="...">
+      <img src="assets/img/cover2.jpg" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
         <h5>Jeden Tag was gutes.</h5>
         <p>Schnell und Einfach zum Mittagsgenus.</p>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="img/cover3.jpg" class="d-block w-100" alt="...">
+      <img src="assets/img/cover3.jpg" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
         <h5>ItsTastY</h5>
         <p>Top Gerichte, einfach und Schnell.</p>
@@ -64,7 +59,7 @@ GetNav("");
     <span class="visually-hidden">Next</span>
   </button>
 </div>
-<div class='container'>
+<div class='container mt-5'>
   <div class='row g-3'>
    <?php
       GetCart();
