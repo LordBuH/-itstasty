@@ -39,16 +39,11 @@ echo"
             </ul>
           </li>-->
         </ul>
-        <form class='d-flex mt-3' role='search'>
-          <input class='form-control me-2' type='search' placeholder='Search' aria-label='Search'>
-          <button class='btn btn-success' type='submit'>Search</button>
-        </form>
       </div>
     </div>
   </div>
 </nav>";
 }
-
 
 function GetCart() {
   for($i=0; $i < 9; $i++) {  #for eche (Wen liste da ist)
@@ -69,14 +64,14 @@ function GetCart() {
               </p>
               <a class='btn btn-primary disabled placeholder col-6'></a>
             </div>
-        </div>
-      </div>";
+      </div>
+    </div>";
  }
 }
 
 function GetFooter() {
   echo"
-<footer class='bg-dark py-4 mt-4'>
+<footer class='bg-dark py-4'>
   <div class='container text-light text-center'>
     <p class='display-5 mb-3'>© ItsTastY-Team.</p>
     <small class='text-white-50'>© ItsTastY-Team.</small>

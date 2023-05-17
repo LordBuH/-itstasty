@@ -94,8 +94,8 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular a
             <label for="floatingPassword">Passwort</label>
           </div>
           <div class="form-floating">
-            <input  type="file" id="floatingInput" name="img">
-            <label for="floatingPassword">Passwort</label>
+            <input  type="file" id="floatingInput" name="img" accept="image/jpeg">
+            <label for="floatingPassword">Profilbild</label>
           </div>
           <div class="d-grid gap-2">
             <button class="btn btn-light btn-lg" type="submit"  name="submit" value="Registrieren">Registrierung</button>

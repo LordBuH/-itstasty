@@ -5,7 +5,7 @@
 }
 
 .auth-card{
-    background-color: #212529;
+    background: linear-gradient(180deg, #212529, rgb(95, 95, 95));
     box-shadow: 0 3xp 12xp rgb(0, 0, 0 / 0.2);
     border-radius: 20px;
     padding-top: 10px;
