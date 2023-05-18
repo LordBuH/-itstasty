@@ -10,6 +10,12 @@
        else{
         header('Location: login.php');
        }
+       $stmt = $conn->prepare('SELECT MAX(id) AS max_id FROM recipe');
+       $stmt->execute();
+       $result = $stmt->get_result();
+       $row = $result->fetch_assoc();
+       $maxId = $row['max_id'];
+       $RecipeID = $maxId + 1
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,14 +61,10 @@
       <label for="floatingtime">Zeit</label>
     </div>    
     <div class="form-floating">
-      <input type="instruction" class="form-control" id="floatingInput" name='recipeID' placeholder='RezeptID'>
-      <label for="floatingrecipeID">RecipeID</label>
-    </div>
-    <div class="form-floating">
       <input  type='file' id='floatingInput' name='recipeImg' accept='image/jpeg'>
     </div>
     <div class="form-floating">
-    <div class="btn-group shadow-0">
+    <div class="btn-group shadow-0 d-flex">
       <select class="form-select" name='quantityID' aria-label="Default select example">
         <option selected>Mengen Art</option>
         <option value="1">mg</option>
@@ -82,8 +84,6 @@
     </div>  
     <div class="d-grid gap-2">
       <button class="btn btn-light btn-lg" type="submit"  name="submit" value="Hochladen">Hochladen</button>
-      <p>RezeptID Wichtig vortlaufende Zahlen eintragen. Der erster Eintrag 1 und dann weiter zählen xD.</p> 
-      <p>1 = mg, 2 = g, 3 = kg, 4 = ml, 5 = l, 5 = Stück, 6 = Esslöffel, 7 = Teelöffel</p>  
     </div>
   <?php
     if (isset($error)) { 
@@ -178,7 +178,6 @@ $stmt->execute();
 
 ###### Zutaten Rezept DB ########
 $IngredientsID = 1;
-$RecipeID = $_POST['recipeID'];
 $QuantityID = $_POST['quantityID'];
 $QuantityValue = $_POST['quantityValue'];
 
