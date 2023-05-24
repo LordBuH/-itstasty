@@ -206,11 +206,7 @@ $conn->close();
     option8.value = "8";
     option8.textContent = "Teelöffel";
 
-###### Zutaten Rezept DB ########
-$IngredientsID = 1;
-$RecipeID = $_POST['recipeID'];
-$QuantityID = $_POST['quantityID'];
-$QuantityValue = $_POST['quantityValue'];
+
 
     IngredientDiv.appendChild(inputIngredient);
     IngredientDiv.appendChild(labelIngredient);
