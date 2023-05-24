@@ -1,16 +1,3 @@
-<?php
-  include 'db_conn.php';
-  include 'content.php';
-  session_start();
-        if(isset($_SESSION['userID'])){
-            $userID = $_SESSION['userID'];
-            $username = $_SESSION['username'];
-            $userImg = $_SESSION['userImg'];
-       }
-       else{
-        header('Location: login.php');
-       }
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,6 +19,46 @@
 </head>
 <body>
 <?php
+  include 'db_conn.php';
+  include 'content.php';
+  include 'query.php';
+  session_start();
+  if(isset($_SESSION['userID'])){
+    $userID = $_SESSION['userID'];
+    $username = $_SESSION['username'];
+    $userImg = $_SESSION['userImg'];
+  }
+  else{
+    header('Location: login.php');
+  }
+
+  if (isset($_POST['submit'])) {
+  // Überprüfen, ob das Formular abgeschickt wurde
+    $name = $_POST['name'];
+    $instruction = $_POST['instruction'];
+    $time = $_POST['time'];
+    $categorie = $_POST['categorie'];
+    $recipeImg = $_POST['recipeImg'];
+
+    $ingredients = $_POST['ingredients'];
+    $quantityIDs = $_POST['quantityID'];
+    $quantityValues = $_POST['quantityValue'];
+    $count = is_array($ingredients) ? count($ingredients) : 0;
+    $tests = array();
+    for ($i = 0; $i < $count; $i++) {
+      $test = new stdClass();
+      $test->Name = $ingredients[$i];
+      $test->QuantityID = $quantityIDs[$i];
+      $test->QuantityValue = $quantityValues[$i];
+      array_push($tests, $test);
+    }
+    CreateRecipe($userID, $name, $instruction, $time, $recipeImg, $categorie, $tests);
+  $info = 'Rezept wurde erfolgreich in die DB geladen.';
+}
+
+$conn->close(); 
+?>
+<?php
   GetNav("");
 ?>
 <div class="page-content d-flex align-items-center mt-5">
@@ -41,158 +68,164 @@
         <div class='logo-area d-flex justify-content-center'>
           <img id="header_logo" class="logo" src="assets/img/logo.png" />
         </div>        
-  <form class="row g-3" method="post">
-    <div class="form-floating">
-      <input type="username" class="form-control" id="floatingInput" name="name" placeholder="Name">
-      <label for="floatingname">Name</label>
-    </div>    
-    <div class="form-floating">
-      <input type="instruction" class="form-control" id="floatingInput" name='instruction' placeholder='Zubereitung'>
-      <label for="floatinginstruction">Zutaten</label>
-    </div>    
-    <div class="form-floating">
-      <input type="instruction" class="form-control" id="floatingInput" name='time' placeholder='Zeit'>
-      <label for="floatingtime">Zeit</label>
-    </div>    
-    <div class="form-floating">
-      <input type="instruction" class="form-control" id="floatingInput" name='recipeID' placeholder='RezeptID'>
-      <label for="floatingrecipeID">RecipeID</label>
-    </div>
-    <div class="form-floating">
-      <input  type='file' id='floatingInput' name='recipeImg' accept='image/jpeg'>
-    </div>
-    <div class="form-floating">
-    <div class="btn-group shadow-0">
-      <select class="form-select" name='quantityID' aria-label="Default select example">
-        <option selected>Mengen Art</option>
-        <option value="1">mg</option>
-        <option value="2">g</option>
-        <option value="3">kg</option>
-        <option value="4">ml</option>
-        <option value="5">l</option>
-        <option value="6">Stück</option>
-        <option value="7">Esslöffel</option>
-        <option value="8">Teelöffel</option>
-      </select>
-    </div>
-    </div>     
-    <div class="form-floating">
-      <input type="instruction" class="form-control" id="floatingInput" name='quantityValue' placeholder='Menge'>
-      <label for="floatingquantityValue">Menge</label>
-    </div>  
-    <div class="d-grid gap-2">
-      <button class="btn btn-light btn-lg" type="submit"  name="submit" value="Hochladen">Hochladen</button>
-      <p>RezeptID Wichtig vortlaufende Zahlen eintragen. Der erster Eintrag 1 und dann weiter zählen xD.</p> 
-      <p>1 = mg, 2 = g, 3 = kg, 4 = ml, 5 = l, 5 = Stück, 6 = Esslöffel, 7 = Teelöffel</p>  
-    </div>
-  <?php
-    if (isset($error)) { 
-      echo"<p>$error</p>";
-    } 
-  ?>
+        <form method="post">
+          <div class="form-floating mt-2">
+            <input type="username" class="form-control" id="floatingInput" name="name" placeholder="Name">
+            <label for="floatingname">Name</label>
+          </div>       
+          <div class="form-floating mt-2">
+            <input type="text" class="form-control" id="floatingInput" name='time' placeholder='Zeit'>
+            <label for="floatingtime">Zeit</label>
+          </div>    
+          <div class="form-floating mt-2">
+              <input type="instruction" class="form-control" name='instruction' placeholder='Zubereitung'>
+              <label>Zubereitung</label>
+            </div> 
+          <div class="mt-2">
+            <select class="form-select" name='categorie' aria-label="Default select example">
+              <option selected>Kategorie</option>
+              <option value="1">Frühstück</option>
+              <option value="2">Mittagessen</option>
+              <option value="3">Abendessen</option>
+              <option value="4">Dessert</option>
+            </select>
+          </div>
+          <div class="form-floating mt-2">
+            <input  type='file' id='floatingInput' name='recipeImg' accept='image/jpeg'>
+          </div>
+          <div id="zutaten-container">
+            <div class="form-floating mt-2">
+              <input type="ingredients" class="form-control" name='ingredients[]' placeholder='Zutat'>
+              <label>Zutat</label>
+            </div> 
+            <div class="form-floating mt-2">
+              <input type="instructions" class="form-control" name='quantityValue[]' placeholder='Menge'>
+              <label>Menge</label>
+            </div>  
+            <div class="mt-2">
+                <select class="form-select" name='quantityID[]' aria-label="Default select example">
+                  <option selected>Mengen Art</option>
+                  <option value="1">mg</option>
+                  <option value="2">g</option>
+                  <option value="3">kg</option>
+                  <option value="4">ml</option>
+                  <option value="5">l</option>
+                  <option value="6">Stück</option>
+                  <option value="7">Esslöffel</option>
+                  <option value="8">Teelöffel</option>
+                </select>
+            </div>     
+          </div>
+          <div id="zutaten-button" class="d-grid gap-2 mt-2">
+            <button class="btn btn-light btn-lg" type="button" onclick="addZutat()">Weitere Zutat hinzufügen</button>
+          </div>
+          <div class="d-grid gap-2 mt-2">
+            <button class="btn btn-light btn-lg" type="submit"  name="submit" value="Hochladen">Hochladen</button>
+          </div>
+        </form>
+        <?php
+          if (isset($error)) { 
+            echo"<p>$error</p>";
+          } 
+          if (isset($info)) { 
+            echo"<p>Weiter leitung zum neune Rezept in der einzel ansicht.</p>";
+          } 
+        ?>
+      </div>
     </div>
   </div>
 </div>
-</div>
- <?php /*
-                $headline = "Neues Rezept anlegen";
-                echo'<h1>' . $headline . '</h1>';
-                echo"    <form action='addrecipe.php' method='POST'>                        
-                            <div class='inputs'>
-                                <input placeholder='Name' name='Name'>
-                            </div>
-                            <div class='inputs'>
-                                 <input placeholder='Zubereitung' name='Instruction'>
-                            </div>                            
-                            <div class='inputs'>
-                                <input placeholder='Zeit' name='Time'>
-                            </div>
-                            <div class='inputs'>
-                                <input  type='file' id='floatingInput' name='RecipeImg' accept='image/jpeg'>
-                            </div>                            
-                            <p>RezeptID Wichtig vortlaufende Zahlen eintragen. Der erster Eintrag 1 und dann weiter zählen xD.</p>   
-                            <div class='inputs'>
-                                 <input placeholder='RezeptID' name='RecipeID'>
-                            </div>                    
-                            <p>1 = mg, 2 = g, 3 = kg, 4 = ml, 5 = l, 5 = Stück, 6 = Esslöffel, 7 = Teelöffel</p>       
-                            <div class='inputs'>
-                                <input placeholder='MengenBezeichnungID' name='QuantityID'>
-                            </div>
-                            <div class='inputs'>
-                                 <input placeholder='Menge' name='QuantityValue'>
-                            </div>
-
-                            <input type='submit' name='submit' value='Rezept hochladen'>
-                        </form>
-                    "; 
-   */ ?>
-<!--<form method="POST" action="addrecipe.php">
-  <div id="input-felder">
-    <input type="text" name="zutaten[]" placeholder="Zutat" />
-  </div>
-
-  <div id="more">+</div>
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <input type="submit" value="submit" />
-</form>
 <script>
+  function addZutat() {
+    var container = document.getElementById("zutaten-container");
 
-const button = document.getElementById("more");
-const container = document.getElementById("input-felder");
+    var IngredientDiv = document.createElement("div");
+    IngredientDiv.classList.add("form-floating");
+    IngredientDiv.classList.add("mt-2");
 
-button.addEventListener('click', () => {
-  const input = document.createElement('input');
-  input.setAttribute('name', 'zutaten[]');
-  input.setAttribute('type', 'text');
-  input.setAttribute('placeholder', 'Zutat');
+    var inputIngredient = document.createElement("input");
+    inputIngredient.type = "ingredients";
+    inputIngredient.classList.add("form-control");
+    inputIngredient.name = "ingredients[]";
+    inputIngredient.placeholder = "Zutat";
 
-  container.append(input);
-})
+    var labelIngredient = document.createElement("label");
+    labelIngredient.textContent = "Zutat";
 
-</script>-->
+    var inputQuantity = document.createElement("input");
+    inputQuantity.type = "ingredients";
+    inputQuantity.classList.add("form-control");
+    inputQuantity.classList.add("mt-2");
+    inputQuantity.name = "quantityValue[]";
+    inputQuantity.placeholder = "Menge";
 
-<?php
-if(isset($_POST['zutaten'])) {
-  var_dump($_POST['zutaten']);
+    var labelQuantity = document.createElement("label");
+    labelQuantity.textContent = "Menge";
 
-  //foreach isset post zutaten als zutat
-  // zutat insert table zutat für das rezept
-}
+    var quantityDiv = document.createElement("div");
+    quantityDiv.classList.add("form-floating");
+    quantityDiv.classList.add("mt-2");
 
-if (isset($_POST['submit'])) { // Überprüfen, ob das Formular abgeschickt wurde
-    $name = $_POST['name'];
-    $instruction = $_POST['instruction'];
-    $time = $_POST['time'];
-    $recipeImg = $_POST['recipeImg'];
+    var selectQuantity = document.createElement("select");
+    selectQuantity.classList.add("form-select");
+    selectQuantity.classList.add("mt-2");
+    selectQuantity.name = "quantityID[]";
 
-###### Rezept Insert ########
-echo 'Rezept wurde erfolgreich in die DB geladen.';
-$stmt = $conn->prepare('INSERT INTO Recipe (UserID, Name, Instruction, Time, RecipeImg) VALUES (?, ?, ?, ?, ?)');
-$stmt->bind_param('sssss', $userID, $name, $instruction, $time, $recipeImg);
-$stmt->execute();
+    var optionDefault = document.createElement("option");
+    optionDefault.selected = true;
+    optionDefault.textContent = "Mengen Art";
 
+    var option1 = document.createElement("option");
+    option1.value = "1";
+    option1.textContent = "mg";
 
-###### Zutaten Rezept DB ########
-$IngredientsID = 1;
-$RecipeID = $_POST['recipeID'];
-$QuantityID = $_POST['quantityID'];
-$QuantityValue = $_POST['quantityValue'];
+    var option2 = document.createElement("option");
+    option2.value = "2";
+    option2.textContent = "g";
 
-#$sql_statment = "INSERT INTO `ZutatenRezeptTB` (`IngredientsID`, `RecipeID`, `QuantityID`, `QuantityValue`) VALUES('$IngredientsID', '$RecipeID', '$QuantityID', '$QuantityValue')"
-$stmt = $conn->prepare('INSERT INTO ingredientsrecipe (IngredientsID, RecipeID, QuantityID, QuantityValue) VALUES(?, ?, ?, ?)');
-$stmt->bind_param('ssss', $IngredientsID, $RecipeID, $QuantityID, $QuantityValue);
-$stmt->execute();
+    var option3 = document.createElement("option");
+    option3.value = "3";
+    option3.textContent = "kg";
 
-}
+    var option4 = document.createElement("option");
+    option4.value = "4";
+    option4.textContent = "ml";
 
-$conn->close();
-?>
-<?php
-  GetFooter();
-?>
+    var option5 = document.createElement("option");
+    option5.value = "5";
+    option5.textContent = "l";
+
+    var option6 = document.createElement("option");
+    option6.value = "6";
+    option6.textContent = "Stück";
+
+    var option7 = document.createElement("option");
+    option7.value = "7";
+    option7.textContent = "Esslöffel";
+
+    var option8 = document.createElement("option");
+    option8.value = "8";
+    option8.textContent = "Teelöffel";
+
+    selectQuantity.appendChild(optionDefault);
+    selectQuantity.appendChild(option1);
+    selectQuantity.appendChild(option2);
+    selectQuantity.appendChild(option3);
+    selectQuantity.appendChild(option4);
+    selectQuantity.appendChild(option5);
+    selectQuantity.appendChild(option6);
+    selectQuantity.appendChild(option7);
+    selectQuantity.appendChild(option8);
+
+    IngredientDiv.appendChild(inputIngredient);
+    IngredientDiv.appendChild(labelIngredient);
+    quantityDiv.appendChild(inputQuantity);
+    quantityDiv.appendChild(labelQuantity);
+
+    container.appendChild(IngredientDiv);
+    container.appendChild(selectQuantity);
+    container.appendChild(quantityDiv);
+  }
+</script>
 </body>
 </html>

@@ -5,41 +5,47 @@ include 'content.php';
 
 
 if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular abgeschickt wurde
-  $firstname = $_POST['firstname'];
-  $lastname = $_POST['lastname'];
-  $username = $_POST['username'];
-  $password = $_POST['password'];
-  $email = $_POST['email'];
-  $userImg = $_POST["img"];
-
-  // Generieren eines zufälligen Salts
-  $salt = bin2hex(random_bytes(16));
-
-
-  // Erzeugen des Hashes aus dem Passwort und dem Salt
-  $password = hash('sha256', $password . $salt);
-
-  // Überprüfen, ob der Benutzername bereits existiert
-  $stmt = $conn->prepare('SELECT COUNT(*) FROM user WHERE username = ?');
-  $stmt->bind_param('s', $username);
-  $stmt->execute();
-  $result = $stmt->get_result()->fetch_assoc()['COUNT(*)'];
-
-  if ($result) {
-    $error = 'Benutzername bereits vergeben';
-  } else {
-
-    // Speichern der Benutzerdaten in der Datenbank
-    $stmt = $conn->prepare('INSERT INTO user (Firstname, Lastname, Username, Email, Salt, Password, UserImg) VALUES (?, ?, ?, ?, ?, ?, ?)');
-    $stmt->bind_param('sssssss', $firstname, $lastname, $username, $email, $salt, $password, $userImg);
-    $stmt->execute();
-    header('Location: login.php'); // Weiterleitung zur Login-Seite
-    exit;
+  if(strlen($_POST['password']) > 7){
+    if($_POST['password'] == $_POST['passwordToo']){
+      $firstname = $_POST['firstname'];
+      $lastname = $_POST['lastname'];
+      $username = $_POST['username'];
+      $password = $_POST['password'];
+      $email = $_POST['email'];
+      $userImg = $_POST["img"];
+  
+    // Generieren eines zufälligen Salts
+      $salt = bin2hex(random_bytes(16));
+  
+  
+    // Erzeugen des Hashes aus dem Passwort und dem Salt
+      $password = hash('sha256', $password . $salt);
+  
+    // Überprüfen, ob der Benutzername bereits existiert
+      $stmt = $conn->prepare('SELECT COUNT(*) FROM user WHERE username = ?');
+      $stmt->bind_param('s', $username);
+      $stmt->execute();
+      $result = $stmt->get_result()->fetch_assoc()['COUNT(*)'];
+  
+      if ($result) {
+        $error = 'Benutzername bereits vergeben';
+      } else {
+      // Speichern der Benutzerdaten in der Datenbank
+      $stmt = $conn->prepare('INSERT INTO user (Firstname, Lastname, Username, Email, Salt, Password, UserImg) VALUES (?, ?, ?, ?, ?, ?, ?)');
+      $stmt->bind_param('sssssss', $firstname, $lastname, $username, $email, $salt, $password, $userImg);
+      $stmt->execute();
+      header('Location: login.php'); // Weiterleitung zur Login-Seite
+      exit;
+    }
+    // Verbindung schließen
+    $conn->close();
+  } else{
+      $error = 'Passwörter sind nicht identisch.';
+    }
+} else{
+    $error = 'Das Passwort muss mindesten 8 Zeichen lang sein.';
   }
-
-  // Verbindung schließen
-  $conn->close();
-}
+} 
 ?>
 
 <!DOCTYPE html>
@@ -63,12 +69,12 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular a
 </head>
 <body>
   <?php
-  GetNav("Registrierung");
+  GetNav('Registrierung');
   ?>
-<div class="page-content d-flex align-items-center ">
+<div class="page-content d-flex align-items-center">
   <div class="container d-flex justify-content-center">
     <div class='col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5'>
-      <div class='auth-card'>
+      <div class='auth-card mt-5 mb-5'>
           <div class='logo-area d-flex justify-content-center'>
             <img id="header_logo" class="logo" src="assets/img/logo.png" />
           </div>     
@@ -94,16 +100,23 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular a
             <label for="floatingPassword">Passwort</label>
           </div>
           <div class="form-floating">
-            <input  type="file" id="floatingInput" name="img" accept="image/jpeg">
-            <label for="floatingPassword">Profilbild</label>
+            <input type="password" class="form-control" id="floatingPassword" name="passwordToo" placeholder="Passwort wiederholen">
+            <label for="floatingPassword">Passwort wiederholen</label>
           </div>
-          <div class="d-grid gap-2">
+          <div class="form-floating">
+            <input  type="file" id="floatingInput" name="img" accept="image/jpeg">
+          </div>
+          <div class="d-grid gap-2 mb-3">
             <button class="btn btn-light btn-lg" type="submit"  name="submit" value="Registrieren">Registrierung</button>
           </div>
         </form>
         <?php
               if (isset($error)) { 
-                echo"<p>$error</p>";
+                echo"
+                  <div class='d-flex justify-content-center'>
+                  <p>$error</p>
+                  </div>
+                  ";
               } 
             ?>
       </div>
