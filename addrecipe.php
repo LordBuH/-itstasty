@@ -67,58 +67,74 @@ $conn->close();
         <div class='logo-area d-flex justify-content-center'>
           <img id="header_logo" class="logo" src="assets/img/logo.png" />
         </div>        
-  <form class="row g-3" method="post">
-    <div class="form-floating">
-      <input type="username" class="form-control" id="floatingInput" name="name" placeholder="Name">
-      <label for="floatingname">Name</label>
-    </div>    
-    <div class="form-floating">
-      <input type="instruction" class="form-control" id="floatingInput" name='instruction' placeholder='Zubereitung'>
-      <label for="floatinginstruction">Zutaten</label>
-    </div>    
-    <div class="form-floating">
-      <input type="instruction" class="form-control" id="floatingInput" name='time' placeholder='Zeit'>
-      <label for="floatingtime">Zeit</label>
-    </div>    
-    <div class="form-floating">
-      <input type="instruction" class="form-control" id="floatingInput" name='recipeID' placeholder='RezeptID'>
-      <label for="floatingrecipeID">RecipeID</label>
-    </div>
-    <div class="form-floating">
-      <input  type='file' id='floatingInput' name='recipeImg' accept='image/jpeg'>
-    </div>
-    <div class="form-floating">
-    <div class="btn-group shadow-0">
-      <select class="form-select" name='quantityID' aria-label="Default select example">
-        <option selected>Mengen Art</option>
-        <option value="1">mg</option>
-        <option value="2">g</option>
-        <option value="3">kg</option>
-        <option value="4">ml</option>
-        <option value="5">l</option>
-        <option value="6">Stück</option>
-        <option value="7">Esslöffel</option>
-        <option value="8">Teelöffel</option>
-      </select>
-    </div>
-    </div>     
-    <div class="form-floating">
-      <input type="instruction" class="form-control" id="floatingInput" name='quantityValue' placeholder='Menge'>
-      <label for="floatingquantityValue">Menge</label>
-    </div>  
-    <div class="d-grid gap-2">
-      <button class="btn btn-light btn-lg" type="submit"  name="submit" value="Hochladen">Hochladen</button>
-      <p>RezeptID Wichtig vortlaufende Zahlen eintragen. Der erster Eintrag 1 und dann weiter zählen xD.</p> 
-      <p>1 = mg, 2 = g, 3 = kg, 4 = ml, 5 = l, 5 = Stück, 6 = Esslöffel, 7 = Teelöffel</p>  
-    </div>
-  <?php
-    if (isset($error)) { 
-      echo"<p>$error</p>";
-    } 
-  ?>
+        <form class="row g-3" method="post">
+          <div class="form-floating">
+            <input type="name" class="form-control" id="floatingInput" name="name" placeholder="Name">
+            <label for="floatingname">Name</label>
+          </div>       
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInput" name='time' placeholder='Zeit'>
+            <label for="floatingtime">Zeit</label>
+          </div>    
+          <div class="form-floating mt-2">
+              <input type="instruction" class="form-control" name='instruction' placeholder='Zubereitung'>
+              <label>Zubereitung</label>
+            </div> 
+            <div class="form-floating mt-2">
+                <select class="form-select" name='categorie' aria-label="Default select example">
+                  <option selected>Kategorie</option>
+                  <option value="1">Frühstück</option>
+                  <option value="2">Mittagessen</option>
+                  <option value="3">Abendessen</option>
+                  <option value="4">Dessert</option>
+                </select>
+            </div>   
+          <div class="form-floating">
+            <input  type='file' id='floatingInput' name='recipeImg' accept='image/jpeg'>
+          </div>
+          <div id="zutaten-container">
+            <div class="form-floating mt-2">
+              <input type="ingredients" class="form-control" name='ingredients[]' placeholder='Zutat'>
+              <label>Zutat</label>
+            </div> 
+            <div class="form-floating mt-2">
+              <input type="instruction" class="form-control" name='quantityValue[]' placeholder='Menge'>
+              <label>Menge</label>
+            </div>  
+            <div class="form-floating mt-2">
+                <select class="form-select" name='quantityID[]' aria-label="Default select example">
+                  <option selected>Mengen Art</option>
+                  <option value="1">mg</option>
+                  <option value="2">g</option>
+                  <option value="3">kg</option>
+                  <option value="4">ml</option>
+                  <option value="5">l</option>
+                  <option value="6">Stück</option>
+                  <option value="7">Esslöffel</option>
+                  <option value="8">Teelöffel</option>
+                </select>
+            </div>     
+          </div>
+
+          <div id="zutaten-button" class="d-grid gap-2">
+            <button class="btn btn-light btn-lg" type="button" onclick="addZutat()">Weitere Zutat hinzufügen</button>
+          </div>
+
+          <div class="d-grid gap-2">
+            <button class="btn btn-light btn-lg" type="submit"  name="submit" value="Hochladen">Hochladen</button>
+          </div>
+        </form>
+        <?php
+          if (isset($error)) { 
+            echo"<p>$error</p>";
+          } 
+          if (isset($info)) { 
+            echo"<p>Weiterleitung zur Einzelansicht des neunen Rezepts.</p>";
+          } 
+        ?>
+      </div>
     </div>
   </div>
-</div>
 </div>
 <script>
   function addZutat() {
@@ -192,7 +208,15 @@ $conn->close();
     option8.value = "8";
     option8.textContent = "Teelöffel";
 
-
+    selectQuantity.appendChild(optionDefault);
+    selectQuantity.appendChild(option1);
+    selectQuantity.appendChild(option2);
+    selectQuantity.appendChild(option3);
+    selectQuantity.appendChild(option4);
+    selectQuantity.appendChild(option5);
+    selectQuantity.appendChild(option6);
+    selectQuantity.appendChild(option7);
+    selectQuantity.appendChild(option8);
 
     IngredientDiv.appendChild(inputIngredient);
     IngredientDiv.appendChild(labelIngredient);
