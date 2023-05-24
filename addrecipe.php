@@ -208,15 +208,7 @@ $conn->close();
     option8.value = "8";
     option8.textContent = "Teelöffel";
 
-    selectQuantity.appendChild(optionDefault);
-    selectQuantity.appendChild(option1);
-    selectQuantity.appendChild(option2);
-    selectQuantity.appendChild(option3);
-    selectQuantity.appendChild(option4);
-    selectQuantity.appendChild(option5);
-    selectQuantity.appendChild(option6);
-    selectQuantity.appendChild(option7);
-    selectQuantity.appendChild(option8);
+
 
     IngredientDiv.appendChild(inputIngredient);
     IngredientDiv.appendChild(labelIngredient);
