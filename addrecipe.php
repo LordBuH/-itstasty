@@ -101,7 +101,7 @@ $conn->close();
               <input type="instruction" class="form-control" name='quantityValue[]' placeholder='Menge'>
               <label>Menge</label>
             </div>  
-            <div class="form-floating mt-2">
+            <div class="mt-2">
                 <select class="form-select" name='quantityID[]' aria-label="Default select example">
                   <option selected>Mengen Art</option>
                   <option value="1">mg</option>
@@ -208,7 +208,15 @@ $conn->close();
     option8.value = "8";
     option8.textContent = "Teelöffel";
 
-
+    selectQuantity.appendChild(optionDefault);
+    selectQuantity.appendChild(option1);
+    selectQuantity.appendChild(option2);
+    selectQuantity.appendChild(option3);
+    selectQuantity.appendChild(option4);
+    selectQuantity.appendChild(option5);
+    selectQuantity.appendChild(option6);
+    selectQuantity.appendChild(option7);
+    selectQuantity.appendChild(option8);
 
     IngredientDiv.appendChild(inputIngredient);
     IngredientDiv.appendChild(labelIngredient);
@@ -216,8 +224,8 @@ $conn->close();
     quantityDiv.appendChild(labelQuantity);
 
     container.appendChild(IngredientDiv);
-    container.appendChild(selectQuantity);
     container.appendChild(quantityDiv);
+    container.appendChild(selectQuantity);
   }
 </script>
 </body>
