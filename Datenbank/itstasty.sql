@@ -97,6 +97,16 @@ CREATE TABLE CategoriesRecipe(
     PRIMARY KEY(ID)
 );
 
+CREATE TABLE UserFavorites(
+    ID int NOT NULL AUTO_INCREMENT,
+    UserID int NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES User(ID),
+    RecipeID int NOT NULL,
+    FOREIGN KEY (RecipeID) REFERENCES Recipe(ID),
+
+    PRIMARY KEY(ID)
+);
+
 CREATE TABLE Rating(
     ID int NOT NULL AUTO_INCREMENT,
     UserID int NOT NULL,
