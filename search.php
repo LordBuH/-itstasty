@@ -100,6 +100,7 @@ function GetSearchResult($search, $categories)
                     $dr->quantityName = $qt->Description;
                 }
             }
+            $dr->quantityValue = $dr->QuantityValue;
             array_push($ingredientsList, $dr);
         }
     

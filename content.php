@@ -55,22 +55,21 @@ function GetCart($array) {
     echo "
     <div class='col-12 col-md-6 col-lg-4'>
         <div class='card' aria-hidden='true'>
-          <img src=".$as->RecipeImg." class='card-img-top' alt='...'>
+        <img src='data:image/jpeg;base64," . base64_encode($as->RecipeImg) . "'>
             <div class='card-body'>
-              <h5 class='card-title placeholder-glow'>
+              <h5 class='card-title'>
                 ". $as->Name ."
-                <span class='placeholder col-6'></span>
               </h5>
-              <p class='card-text placeholder-glow'>
-                <span class='placeholder col-7'></span>
-                <span class='placeholder col-4'></span>
-                <span class='placeholder col-4'></span>
-                <span class='placeholder col-6'></span>
-                <span class='placeholder col-8'></span>
-              </p>
-              <a class='btn btn-primary disabled placeholder col-6'></a>
+              <p class='card-text'>Zutaten</p>";
+              foreach($as->ingredientsList as $item) {
+                echo"<p class='card-text'>".$item->quantityValue. " " . $item->quantityName . " " . $item->IngredientName ."</p>";
+              }
+              echo"
+              <h5 class='card-title'>zubereitung</h5>
+              <p class='card-text'>".$as->instruction ."</p>
+              
+              <a href='recip.php?recip=". $as->ID . "' class='btn btn-primary stretched-link'>Go somewhere</a>
             </div>
-            <a href='rezept.php?rezept=". $as->ID . "' class='btn btn-primary stretched-link'>Go somewhere</a>
         </div>
       </div>";
  }

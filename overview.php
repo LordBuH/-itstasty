@@ -11,56 +11,42 @@
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
         <style>
-          .main{
-            padding-top: 50px;
+          .container{
+            padding-top: 100px;
           }
-
           .search {
             position: relative;
-            top: 100px;
           }
         </style>
-
-  <?php
+</head>
+<body>
+<?php
   include 'content.php';
   GetNav("test");
-
-  ?>
-
+?>
+<div class='container mb-5'>
 <div class='search'>
-  <form action="overview.php" method="post">
-
-  <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+  <div>
+    <form action="overview.php" method="post">
+    <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
       <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" name="categories[]" value=1>
       <label class="btn me-2 btn-outline-primary rounded-pill" for="btncheck1">Frühstück</label>
 
       <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" name="categories[]" value=2>
-      <label class="btn me-2 btn-outline-primary rounded-pill" for="btncheck2">Abendessen</label>
+      <label class="btn me-2 btn-outline-primary rounded-pill" for="btncheck2">Mittagessen</label>
 
       <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off" name="categories[]" value=3>
-      <label class="btn me-2 btn-outline-primary rounded-pill" for="btncheck3">Checkbox 3</label>
-    </div>
+      <label class="btn me-2 btn-outline-primary rounded-pill" for="btncheck3">Abendessen</label>
 
-    <form class="d-flex" role="search">
-      <input class="form-control me-2 border rounded-pill" type="search" placeholder="search" id="search" name="search">
-      <button class="btn btn-outline-success" type="submit" value="Submit">Search</button>
-    </form>
-
+      <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off" name="categories[]" value=4>
+      <label class="btn me-2 btn-outline-primary rounded-pill" for="btncheck4">Dessert</label>
+  </div>
+  <form class="d-flex" role="search">
+    <input class="form-control me-2 mt-2 border rounded-pill" type="search" placeholder="search" id="search" name="search">
+    <button class="btn btn-outline-success mt-2" type="submit" value="Submit">Search</button>
   </form>
+</form>
 
-
-</head>
-<body>
-  <!--
-  <form action="search.php" method="post">
-    <label for="input">Input:</label>
-    <input type="text" id="search" name="search">
-    <input type="test" name="categories[1]" value=1>
-    <input type="test" name="categories[2]" value=2>
-    <input type="submit" value="Submit">
-  </form>
-  -->
-  <div class='container mt-5'>
   <div class='row g-3'>
   <?php
   if (isset($_POST['search']))
@@ -84,9 +70,9 @@
   </div>
   </div>
 
-</body>
-<footer>
+</div>
+</div>
 <?php
   GetFooter();
   ?>
-</footer>
+</body>

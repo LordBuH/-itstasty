@@ -65,6 +65,7 @@ function GetRecipeDataById($id)
                 if($dr->IngredientsID == $ig->ID)
                 {
                     $dr->IngredientName = $ig->Name;
+                    $dr->quantityValue = $ig->QuantityValue;
                 }
             }
     
@@ -320,6 +321,77 @@ function GetRecipeWithIngredients($ingredients)
     }
 }
 
+function AddRecipeToFavorites($userID, $RecipeID)
+{
+    include 'db_conn.php';
+
+    $stmt = $conn->prepare('INSERT INTO userfavorites (UserID, RecipeID) VALUES(?, ?)');
+    $stmt->bind_param('ss', $userID, $RecipeID);
+    $stmt->execute();
+}
+
+function RemoveRecipeToFavorites($userID, $RecipeID)
+{
+    include 'db_conn.php';
+
+    $stmt = $conn->prepare('DELETE FROM userfavorites WHERE UserID=? AND RecipeID=?');
+    $stmt->bind_param('ss', $userID, $RecipeID);
+    $stmt->execute();
+}
+
+function IsUserRecipeFavorite($userID, $RecipeID)
+{
+    include 'db_conn.php';
+
+    $stmt = $conn->prepare('SELECT * FROM userfavorites WHERE UserID=? AND RecipeID=? ');
+    $stmt->bind_param('ss', $userID, $RecipeID);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+
+    if(!$row)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+function CreateFavorCards($userID)
+{
+    include 'content.php';
+
+    $recipeList = GetUserFavoriteRecipes($userID);
+
+    GetCart($recipeList);
+}
+
+function GetUserFavoriteRecipes($userID)
+{
+    include 'db_conn.php';
+
+    $recipeList = array();
+
+    $stmt = $conn->prepare('SELECT RecipeID FROM userfavorites WHERE UserID=?');
+    $stmt->bind_param('s', $userID);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $result = ReplaceObjectWithArray($result);
+
+    foreach($result as $rl)
+    {
+        $recipe = GetRecipeDataById($rl->RecipeID);
+
+        foreach($recipe as $One)
+        {
+            array_push($recipeList, $One);
+        }
+    }
+
+    return $recipeList;
+}
 
 function ReplaceObjectWithArray($obj)
 {
