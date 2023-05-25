@@ -118,7 +118,7 @@ GetNav("Rezept hinzufügen");
                   <option value="4">Dessert</option>
                 </select>
             </div>   
-          <div class="form-floating">
+          <div>
             <input type="file" class="form-control" id="customFile" name="recipeImg"/>
           </div>
           <div id="zutaten-container">

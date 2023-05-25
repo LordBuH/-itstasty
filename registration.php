@@ -128,8 +128,8 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular a
             <input type="password" class="form-control" id="floatingPassword" name="passwordToo" placeholder="Passwort wiederholen">
             <label for="floatingPassword">Passwort wiederholen</label>
           </div>
-          <div class="form-floating">
-          <input type="file" class="form-control" id="customFile" name="img"/>
+          <div>
+            <input type="file" class="form-control" id="customFile" name="img"/>
           </div>
           <div class="d-grid gap-2 mb-3">
             <button class="btn btn-light btn-lg" type="submit"  name="submit" value="Registrieren">Registrierung</button>

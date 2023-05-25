@@ -78,7 +78,7 @@ function GetCart($array) {
 
 function GetFooter() {
   echo"
-<footer class='bg-dark py-4 mt-4'>
+<footer class='bg-dark py-4'>
   <div class='container text-light text-center'>
     <p class='display-5 mb-3'>© ItsTastY-Team.</p>
     <small class='text-white-50'>© ItsTastY-Team.</small>

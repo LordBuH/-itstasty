@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
       <label for="floatingPassword">Passwort</label>
     </div>
     <div class="d-grid gap-2">
-      <button class="btn btn-light btn-lg" type="submit"  name="submit" value="Anmelden">Anmelden</button>
+      <button class="btn btn-light btn-lg mb-2" type="submit"  name="submit" value="Anmelden">Anmelden</button>
       <a class='btn btn-light btn-lg' href='registration.php' role='button'>Registrieren</a>
     </div>
   </form>

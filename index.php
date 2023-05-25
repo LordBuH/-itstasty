@@ -1,5 +1,6 @@
 <?php
 include 'content.php';
+include 'query.php';
 session_start();
 ?>
 
@@ -62,7 +63,7 @@ GetNav("");
 <div class='container mt-5'>
   <div class='row g-3'>
    <?php
-      GetCart();
+      GetCart(GetTop3());
     ?>
   </div>
 </div>
