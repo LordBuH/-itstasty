@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Einbindung der Datenbankverbindung
 include 'db_conn.php';
 include 'content.php';
@@ -50,7 +51,12 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular a
               $stmt = $conn->prepare('INSERT INTO user (Firstname, Lastname, Username, Email, Salt, Password, UserImg) VALUES (?, ?, ?, ?, ?, ?, ?)');
               $stmt->bind_param('sssssss', $firstname, $lastname, $username, $email, $salt, $password, $fileData);
               $stmt->execute();
-              header('Location: login.php'); // Weiterleitung zur Login-Seite
+              $ID = $stmt->insert_id;
+              $_SESSION['userID'] = $ID;
+              $_SESSION['username'] = $username;
+              $_SESSION['userImg'] = $fileData;
+
+              header('Location: user.php');
               exit;
           }
         } else {
