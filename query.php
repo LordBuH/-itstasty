@@ -65,7 +65,6 @@ function GetRecipeDataById($id)
                 if($dr->IngredientsID == $ig->ID)
                 {
                     $dr->IngredientName = $ig->Name;
-                    $dr->quantityValue = $ig->QuantityValue;
                 }
             }
     
@@ -78,6 +77,7 @@ function GetRecipeDataById($id)
                     $dr->quantityName = $qt->Description;
                 }
             }
+            $dr->quantityValue = $dr->QuantityValue;
             array_push($ingredientsList, $dr);
         }
     
