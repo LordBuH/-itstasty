@@ -286,6 +286,41 @@ function UpdateRecipe($Recipe)
 }
 
 
+function GetRecipeWithIngredients($ingredients)
+{
+    include 'db_conn.php';
+    
+    
+    $sql_statment = 'SELECT * FROM recipe ';
+    $bind_param = "";
+
+    foreach($ingredients as $igl)
+    {
+        $ID = GetIngredientID($igl);
+
+        if(!$ID)
+        {
+            continue;
+        }
+
+        $sql_statment = $sql_statment . ' INNER JOIN ingredientsrecipe as t'.$ID.' on t'.$ID.'.RecipeID = recipe.ID and t'.$ID.'.IngredientsID='.$ID;
+    }
+
+    $stmt = $conn->prepare($sql_statment);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    $test = ReplaceObjectWithArray($result);
+
+    foreach($test as $t)
+    {
+
+        echo "RECIPE = " . $t->RecipeID;
+    }
+}
+
+
 function ReplaceObjectWithArray($obj)
 {
     $newArray = array();

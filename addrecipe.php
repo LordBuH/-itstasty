@@ -33,32 +33,61 @@
   }
 
   if (isset($_POST['submit'])) {
-  // Überprüfen, ob das Formular abgeschickt wurde
+    // Überprüfen, ob das Formular abgeschickt wurde
     $name = $_POST['name'];
     $instruction = $_POST['instruction'];
     $time = $_POST['time'];
     $categorie = $_POST['categorie'];
-    $recipeImg = $_POST['recipeImg'];
+    $recipeImg = $_FILES['recipeImg'];
+  
+    // Überprüfen, ob eine Datei ausgewählt wurde
+    if (!empty($recipeImg['name'])) {
+      // Dateiinformationen abrufen
+      $fileName = $recipeImg['name'];
+      $fileTmpName = $recipeImg['tmp_name'];
+      $fileSize = $recipeImg['size'];
+      $fileError = $recipeImg['error'];
 
-    $ingredients = $_POST['ingredients'];
-    $quantityIDs = $_POST['quantityID'];
-    $quantityValues = $_POST['quantityValue'];
-    $count = is_array($ingredients) ? count($ingredients) : 0;
-    $tests = array();
-    for ($i = 0; $i < $count; $i++) {
-      $test = new stdClass();
-      $test->Name = $ingredients[$i];
-      $test->QuantityID = $quantityIDs[$i];
-      $test->QuantityValue = $quantityValues[$i];
-      array_push($tests, $test);
+      $ingredients = $_POST['ingredients'];
+      $quantityIDs = $_POST['quantityID'];
+      $quantityValues = $_POST['quantityValue'];
+      $count = is_array($ingredients) ? count($ingredients) : 0;
+  
+      // Dateiendung überprüfen (nur JPG/JPEG-Dateien erlaubt)
+      $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+      $allowedExtensions = array('jpg', 'jpeg');
+      if (in_array($fileExt, $allowedExtensions)) {
+        // Überprüfen, ob keine Fehler aufgetreten sind
+        if ($fileError === 0) {
+          // Den Inhalt der Datei in ein BLOB umwandeln
+          $fileData = file_get_contents($fileTmpName);
+          
+          // Die Datei in die Datenbank einfügen
+          $tests = array();
+          for ($i = 0; $i < $count; $i++) {
+            $test = new stdClass();
+            $test->Name = $ingredients[$i];
+            $test->QuantityID = $quantityIDs[$i];
+            $test->QuantityValue = $quantityValues[$i];
+            array_push($tests, $test);
+          }
+          CreateRecipe($userID, $name, $instruction, $time, $fileData, $categorie, $tests);
+          $info = 'Rezept wurde erfolgreich in die Datenbank geladen.';
+        } else {
+          $error = 'Es ist ein Fehler beim Hochladen der Datei aufgetreten: ' . $fileError;
+        }
+      } else {
+        $error = 'Es sind nur JPG/JPEG-Dateien erlaubt.';
+      }
+    } else {
+      $error = 'Es wurde keine Datei ausgewählt.';
     }
-    CreateRecipe($userID, $name, $instruction, $time, $recipeImg, $categorie, $tests);
-  $info = 'Rezept wurde erfolgreich in die DB geladen.';
-}
+  }
+  
 
 $conn->close(); 
 
-  GetNav("");
+GetNav("Rezept hinzufügen");
 ?>
 <div class="page-content d-flex align-items-center mt-5">
   <div class="container d-flex justify-content-center">
@@ -67,7 +96,7 @@ $conn->close();
         <div class='logo-area d-flex justify-content-center'>
           <img id="header_logo" class="logo" src="assets/img/logo.png" />
         </div>        
-        <form class="row g-3" method="post">
+        <form class="row g-3" method="post" enctype="multipart/form-data">
           <div class="form-floating">
             <input type="name" class="form-control" id="floatingInput" name="name" placeholder="Name">
             <label for="floatingname">Name</label>
@@ -90,7 +119,7 @@ $conn->close();
                 </select>
             </div>   
           <div class="form-floating">
-            <input  type='file' id='floatingInput' name='recipeImg' accept='image/jpeg'>
+            <input type="file" class="form-control" id="customFile" name="recipeImg"/>
           </div>
           <div id="zutaten-container">
             <div class="form-floating mt-2">

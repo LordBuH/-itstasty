@@ -12,30 +12,55 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular a
       $username = $_POST['username'];
       $password = $_POST['password'];
       $email = $_POST['email'];
-      $userImg = $_POST["img"];
+      $userImg = $_FILES["img"];
+      
+      if (!empty($userImg['name'])) {
+        // Dateiinformationen abrufen
+        $fileName = $userImg['name'];
+        $fileTmpName = $userImg['tmp_name'];
+        $fileSize = $userImg['size'];
+        $fileError = $userImg['error'];
+
+      
+      $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+      $allowedExtensions = array('jpg', 'jpeg');
+      if (in_array($fileExt, $allowedExtensions)) {
+        // Überprüfen, ob keine Fehler aufgetreten sind
+        if ($fileError === 0) {
+          // Den Inhalt der Datei in ein BLOB umwandeln
+          $fileData = file_get_contents($fileTmpName);
+
+          // Generieren eines zufälligen Salts
+            $salt = bin2hex(random_bytes(16));
   
-    // Generieren eines zufälligen Salts
-      $salt = bin2hex(random_bytes(16));
   
+          // Erzeugen des Hashes aus dem Passwort und dem Salt
+            $password = hash('sha256', $password . $salt);
   
-    // Erzeugen des Hashes aus dem Passwort und dem Salt
-      $password = hash('sha256', $password . $salt);
+          // Überprüfen, ob der Benutzername bereits existiert
+            $stmt = $conn->prepare('SELECT COUNT(*) FROM user WHERE username = ?');
+            $stmt->bind_param('s', $username);
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_assoc()['COUNT(*)'];
   
-    // Überprüfen, ob der Benutzername bereits existiert
-      $stmt = $conn->prepare('SELECT COUNT(*) FROM user WHERE username = ?');
-      $stmt->bind_param('s', $username);
-      $stmt->execute();
-      $result = $stmt->get_result()->fetch_assoc()['COUNT(*)'];
-  
-      if ($result) {
-        $error = 'Benutzername bereits vergeben';
+          if ($result) {
+              $error = 'Benutzername bereits vergeben';
+          } else {
+            // Speichern der Benutzerdaten in der Datenbank
+              $stmt = $conn->prepare('INSERT INTO user (Firstname, Lastname, Username, Email, Salt, Password, UserImg) VALUES (?, ?, ?, ?, ?, ?, ?)');
+              $stmt->bind_param('sssssss', $firstname, $lastname, $username, $email, $salt, $password, $fileData);
+              $stmt->execute();
+              header('Location: login.php'); // Weiterleitung zur Login-Seite
+              exit;
+          }
+        } else {
+          $error = 'Es ist ein Fehler beim Hochladen der Datei aufgetreten: ' . $fileError;
+        }
       } else {
-      // Speichern der Benutzerdaten in der Datenbank
-      $stmt = $conn->prepare('INSERT INTO user (Firstname, Lastname, Username, Email, Salt, Password, UserImg) VALUES (?, ?, ?, ?, ?, ?, ?)');
-      $stmt->bind_param('sssssss', $firstname, $lastname, $username, $email, $salt, $password, $userImg);
-      $stmt->execute();
-      header('Location: login.php'); // Weiterleitung zur Login-Seite
-      exit;
+        $error = 'Es sind nur JPG/JPEG-Dateien erlaubt.';
+      }
+    } else {
+      $error = 'Es wurde keine Datei ausgewählt.';
     }
     // Verbindung schließen
     $conn->close();
@@ -45,7 +70,7 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular a
 } else{
     $error = 'Das Passwort muss mindesten 8 Zeichen lang sein.';
   }
-} 
+}
 ?>
 
 <!DOCTYPE html>
@@ -78,7 +103,7 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular a
           <div class='logo-area d-flex justify-content-center'>
             <img id="header_logo" class="logo" src="assets/img/logo.png" />
           </div>     
-        <form class="row g-3" method="post">
+        <form class="row g-3" method="post" enctype="multipart/form-data">
           <div class="form-floating">
             <input type="firsname" class="form-control" id="floatingInput" name="firstname" placeholder="Vorname">
             <label for="floatingFirstname">Vorname</label>
@@ -104,7 +129,7 @@ if (isset($_POST['submit'])) { // Überprüfen, ob das Registrierungs-Formular a
             <label for="floatingPassword">Passwort wiederholen</label>
           </div>
           <div class="form-floating">
-            <input  type="file" id="floatingInput" name="img" accept="image/jpeg">
+          <input type="file" class="form-control" id="customFile" name="img"/>
           </div>
           <div class="d-grid gap-2 mb-3">
             <button class="btn btn-light btn-lg" type="submit"  name="submit" value="Registrieren">Registrierung</button>

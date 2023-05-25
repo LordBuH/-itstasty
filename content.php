@@ -39,20 +39,26 @@ echo"
             </ul>
           </li>-->
         </ul>
+        <form class='d-flex mt-3' role='search'>
+          <input class='form-control me-2' type='search' placeholder='Search' aria-label='Search'>
+          <button class='btn btn-success' type='submit'>Search</button>
+        </form>
       </div>
     </div>
   </div>
 </nav>";
 }
 
-function GetCart() {
-  for($i=0; $i < 9; $i++) {  #for eche (Wen liste da ist)
+
+function GetCart($array) {
+  foreach($array as $as) {
     echo "
     <div class='col-12 col-md-6 col-lg-4'>
         <div class='card' aria-hidden='true'>
-          <img src='assets/img/cover3.jpg' class='card-img-top' alt='...'>
+          <img src=".$as->RecipeImg." class='card-img-top' alt='...'>
             <div class='card-body'>
               <h5 class='card-title placeholder-glow'>
+                ". $as->Name ."
                 <span class='placeholder col-6'></span>
               </h5>
               <p class='card-text placeholder-glow'>
@@ -64,14 +70,15 @@ function GetCart() {
               </p>
               <a class='btn btn-primary disabled placeholder col-6'></a>
             </div>
-      </div>
-    </div>";
+            <a href='rezept.php?rezept=". $as->ID . "' class='btn btn-primary stretched-link'>Go somewhere</a>
+        </div>
+      </div>";
  }
 }
 
 function GetFooter() {
   echo"
-<footer class='bg-dark py-4'>
+<footer class='bg-dark py-4 mt-4'>
   <div class='container text-light text-center'>
     <p class='display-5 mb-3'>© ItsTastY-Team.</p>
     <small class='text-white-50'>© ItsTastY-Team.</small>
